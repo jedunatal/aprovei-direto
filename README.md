@@ -188,20 +188,6 @@ aprovei-direto/
 
 ---
 
-## 🌐 Portas & Serviços Disponíveis
-
-| Serviço | Porta Padrão | URL / Descrição |
-| :--- | :--- | :--- |
-| **Aplicação Web (Laravel/Sail)** | `80` (Sail) / `8000` (Local) | [http://localhost:8000](http://localhost:8000) |
-| **Vite Dev Server (HMR)** | `5173` | [http://localhost:5173](http://localhost:5173) |
-| **Mailpit (Web Interface)** | `8025` | [http://localhost:8025](http://localhost:8025) (Visualização de e-mails locais) |
-| **Mailpit (SMTP Server)** | `1025` | Conexão SMTP local para envio de e-mails |
-| **MySQL** | `3306` | Conexão com o banco de dados |
-| **Redis** | `6379` | Cache, sessões e mensageria |
-| **Health Check Endpoint** | `/up` | Verificação de disponibilidade da aplicação |
-
----
-
 ## 🧪 Testes e Qualidade de Código
 
 - **Executar a suite de testes:**
