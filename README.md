@@ -6,25 +6,26 @@
 [![Laravel](https://img.shields.io/badge/Laravel-13.x-FF2D20?style=for-the-badge&logo=laravel&logoColor=white)](https://laravel.com)
 [![React](https://img.shields.io/badge/React-18.x-61DAFB?style=for-the-badge&logo=react&logoColor=black)](https://react.dev)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.x-3178C6?style=for-the-badge&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
+[![Sanctum API](https://img.shields.io/badge/Sanctum-REST_API-E040FB?style=for-the-badge&logo=json&logoColor=white)](https://laravel.com/docs/sanctum)
 [![TailwindCSS](https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white)](https://tailwindcss.com)
-[![Inertia.js](https://img.shields.io/badge/Inertia.js-2.0-9553E9?style=for-the-badge&logo=inertia&logoColor=white)](https://inertiajs.com)
 [![Docker Sail](https://img.shields.io/badge/Docker-Sail-2496ED?style=for-the-badge&logo=docker&logoColor=white)](https://laravel.com/docs/sail)
-[![Tests](https://img.shields.io/badge/Tests-100%25_Passing-brightgreen?style=for-the-badge&logo=githubactions&logoColor=white)](#-testes-automatizados--qualidade)
+[![Tests](https://img.shields.io/badge/API_Tests-100%25_Passing-brightgreen?style=for-the-badge&logo=githubactions&logoColor=white)](#-testes-automatizados--qualidade)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=for-the-badge)](https://opensource.org/licenses/MIT)
 
 <br/>
 
 <p align="center">
-  <b>Monólito Moderno e Reativo</b> • <b>Single Page Application (SPA)</b> • <b>Controle de Acesso RBAC</b> • <b>Motor Inteligente de Questões</b>
+  <b>Arquitetura RESTful Modular</b> • <b>SPA React + TypeScript</b> • <b>Autenticação Headless (Sanctum)</b> • <b>Controle de Acesso RBAC com Enums Nativos</b>
 </p>
 
 <p align="center">
   <a href="#-visão-geral">Visão Geral</a> •
-  <a href="#-principais-funcionalidades">Funcionalidades</a> •
-  <a href="#-arquitetura-e-fluxo">Arquitetura</a> •
-  <a href="#-modelo-de-dados">Modelo de Dados</a> •
+  <a href="#-principais-recursos">Recursos</a> •
+  <a href="#-arquitetura-do-sistema">Arquitetura</a> •
+  <a href="#-catálogo-de-rotas-e-endpoints">Endpoints API</a> •
+  <a href="#-controle-de-acesso-rbac">RBAC & Permissões</a> •
   <a href="#-início-rápido">Início Rápido</a> •
-  <a href="#-credenciais-de-acesso">Credenciais</a> •
+  <a href="#-credenciais-de-desenvolvimento">Credenciais</a> •
   <a href="#-roadmap">Roadmap</a>
 </p>
 
@@ -34,55 +35,56 @@
 
 ## 💡 Visão Geral
 
-O **Aprovei Direto** foi idealizado para transformar o estudo para concursos públicos no Brasil através de uma experiência de usuário **instantânea, sem recarregamento de página** e com **análise profunda de métricas de aprendizado**.
+O **Aprovei Direto** é uma plataforma de tecnologia educacional moderna voltada para a preparação de alto rendimento para concursos públicos. 
 
-Construído sobre o poderoso ecossistema **Laravel + Inertia.js + React (TypeScript)**, o projeto elimina o custo de manter uma API REST separada para interfaces internas enquanto entrega a interatividade de uma aplicação frontend de ponta.
+O sistema foi desenhado com uma **arquitetura de API RESTful desacoplada e modularizada**, fornecendo segurança rigorosa através de **Laravel Sanctum (Tokens Bearer + Stateful SPA)**, controle de acesso baseado em papéis (**RBAC**) com **Enums nativos do PHP 8.3**, respostas JSON padronizadas e integração reativa com **React 18** e **TypeScript**.
 
 > [!TIP]
-> **Por que este projeto se destaca?**
-> - ⚡ **Experiência SPA sem complexidade de API**: Graças ao Inertia.js 2.0.
-> - 🎯 **Domínio Rico & Tipado**: Tipagem estrita com PHP 8.3 (`declare(strict_types=1);`), Enums nativos e Models Eloquent robustas.
-> - 🛡️ **Segurança e RBAC**: Permissões e papéis gerenciados com Spatie Permission + autenticação dupla (Breeze por Sessão e Sanctum por Tokens).
-> - 🐳 **100% Conteinerizado**: Zero esforço de setup com Docker e Laravel Sail.
+> **Destaques Arquiteturais:**
+> - 🔑 **Autenticação Headless com Sanctum**: Endpoints REST para registro, login com suporte a múltiplos dispositivos, logout com revogação de tokens e busca de perfil.
+> - 🛡️ **RBAC Tipado com Enums**: Papéis (`SuperAdmin`, `Admin`, `Teacher`, `Student`, `Support`) e mais de 25 permissões granulares gerenciadas via Spatie Permission e Enums PHP nativos.
+> - 🧩 **Rotas de API Modularizadas**: Roteamento organizado por domínios em `routes/api/` (Auth, Questões, Disciplinas, Tópicos, Bancas, Dashboard, Assinaturas e Pagamentos).
+> - 🎯 **Tratamento Global de Exceções**: Respostas JSON consistentes para erros de validação (`422`), autenticação (`401`) e recursos inexistentes (`404`).
+> - 🐳 **Ambiente 100% Dockerizado**: MySQL 8.4, Redis e Mailpit orquestrados via Laravel Sail.
 
 ---
 
-## ✨ Principais Funcionalidades
+## ✨ Principais Recursos
 
 <table>
   <tr>
     <td width="50%">
-      <h3 align="center">📚 Gestão de Conteúdo</h3>
+      <h3 align="center">🔐 Autenticação & Segurança</h3>
       <ul>
-        <li><b>Taxonomia Completa:</b> Disciplinas, Assuntos/Tópicos hierárquicos e Bancas Examinadoras (Cebraspe, FGV, FCC, Vunesp, etc.).</li>
-        <li><b>Questões com Gabarito Comentado:</b> Enunciados ricos, 5 alternativas (A-E) e explicações didáticas detalhadas.</li>
-        <li><b>Níveis de Dificuldade:</b> Classificação por Enum (<i>Muito Fácil</i> a <i>Muito Difícil</i>).</li>
+        <li><b>Headless Auth REST:</b> Endpoints dedicados para <code>/api/auth/*</code> com emissão de Bearer tokens.</li>
+        <li><b>Perfil Automático:</b> Novos usuários registrados recebem automaticamente a role <code>student</code> dentro de transação atômica.</li>
+        <li><b>Revogação Instantânea:</b> Endpoint de logout que deleta o token ativo no banco de dados.</li>
       </ul>
     </td>
     <td width="50%">
-      <h3 align="center">📊 Resolução & Métricas</h3>
+      <h3 align="center">🛡️ Controle de Acesso (RBAC)</h3>
       <ul>
-        <li><b>Histórico de Tentativas:</b> Registro em tempo real de cada resolução do estudante.</li>
-        <li><b>Caderno de Erros Inteligente:</b> Acesso instantâneo a questões erradas para revisão focada.</li>
-        <li><b>Performance Otimizada:</b> Índices compostos de banco de dados para consultas em milissegundos.</li>
+        <li><b>Enums Nativos:</b> Catálogo centralizado em <code>App\Enums\Role</code> e <code>App\Enums\Permission</code>.</li>
+        <li><b>Hierarquia de 5 Níveis:</b> Super Admin (acesso total), Admin, Teacher (gestão de conteúdo), Student (resolução e dashboard) e Support.</li>
+        <li><b>UserResource:</b> Payload da API retorna automaticamente a lista de roles e permissões do usuário.</li>
       </ul>
     </td>
   </tr>
   <tr>
     <td width="50%">
-      <h3 align="center">🔐 Segurança & Perfis (RBAC)</h3>
+      <h3 align="center">🧩 API REST Modular</h3>
       <ul>
-        <li><b>Papéis Pré-configurados:</b> <code>super_admin</code>, <code>admin</code>, <code>content_manager</code>, <code>support</code> e <code>user</code>.</li>
-        <li><b>Permissões Granulares:</b> Controle estrito sobre CRUD de questões, bancas e usuários.</li>
-        <li><b>Autenticação Híbrida:</b> Sessão web + API Tokens via Laravel Sanctum.</li>
+        <li><b>Separação por Domínios:</b> Módulos isolados em arquivos <code>routes/api/*.php</code>.</li>
+        <li><b>Formatadores JSON:</b> Recursos API Resources desacoplam o modelo de dados da representação externa.</li>
+        <li><b>Health Check:</b> Endpoint <code>GET /api/health</code> para monitoramento em tempo real do MySQL e Redis.</li>
       </ul>
     </td>
     <td width="50%">
-      <h3 align="center">⚡ Experiência do Desenvolvedor (DX)</h3>
+      <h3 align="center">⚡ Qualidade & DevOps (DX)</h3>
       <ul>
-        <li><b>Docker Integrado:</b> MySQL 8.4, Redis e Mailpit configurados e orquestrados.</li>
-        <li><b>Qualidade de Código:</b> Linter PSR-12 automático (Laravel Pint) e suite de testes completa (PHPUnit).</li>
-        <li><b>Logs em Tempo Real:</b> Monitoramento de logs pelo terminal com Laravel Pail.</li>
+        <li><b>Testes Automatizados:</b> 100% dos fluxos de API validados com PHPUnit.</li>
+        <li><b>Padronização PSR-12:</b> Formatação de código automatizada com Laravel Pint.</li>
+        <li><b>Infraestrutura Sail:</b> Containers pré-configurados com MySQL 8.4, Redis e Mailpit.</li>
       </ul>
     </td>
   </tr>
@@ -90,134 +92,120 @@ Construído sobre o poderoso ecossistema **Laravel + Inertia.js + React (TypeScr
 
 ---
 
-## 🏗️ Arquitetura e Fluxo do Sistema
+## 🏗️ Arquitetura do Sistema
 
 ```mermaid
 flowchart TD
-    subgraph ClientSide ["💻 Frontend (SPA)"]
-        UserBrowser["🌐 Navegador do Usuário"]
+    subgraph ClientSide ["💻 Frontend (SPA React)"]
+        Browser["🌐 Navegador / App"]
         ReactApp["⚛️ React 18 + TypeScript"]
-        Tailwind["🎨 Tailwind CSS & Headless UI"]
-        InertiaClient["🔄 Inertia.js Client"]
+        AxiosClient["📡 Axios Client (Bearer Token Interceptor)"]
         
-        UserBrowser --> ReactApp
-        ReactApp --> Tailwind
-        ReactApp --> InertiaClient
+        Browser --> ReactApp
+        ReactApp --> AxiosClient
     end
 
-    subgraph ServerSide ["⚙️ Backend (Laravel 13 Monolith)"]
-        InertiaAdapter["⚡ Inertia Adapter & Middleware"]
-        Routing["🧭 Laravel Router & Ziggy"]
-        Controllers["🕹️ Controllers & Form Requests"]
-        RBAC["🛡️ Spatie RBAC & Sanctum"]
-        Domain["🧠 Camada de Domínio & Models"]
+    subgraph ApiGateway ["🚪 Laravel Routing & Middleware"]
+        ApiRouter["🧭 Modular Router (routes/api.php)"]
+        SanctumAuth["🔑 Sanctum Auth Middleware (Bearer Token)"]
+        ExceptionHandler["⚠️ Global Exception Handler (JSON 401/422/404)"]
         
-        InertiaClient <== HTTP / JSON JSONP ==> InertiaAdapter
-        InertiaAdapter --> Routing
-        Routing --> Controllers
-        Controllers --> RBAC
-        Controllers --> Domain
+        AxiosClient <== HTTP / JSON REST ==> ApiRouter
+        ApiRouter --> SanctumAuth
+        ApiRouter -.-> ExceptionHandler
     end
 
-    subgraph Infra ["🐳 Infraestrutura & Persistência (Docker Sail)"]
+    subgraph Controllers ["🕹️ API Controllers"]
+        AuthController["🔐 Auth Controllers (Login, Register, Logout, User)"]
+        HealthController["🩺 HealthCheckController"]
+        DomainControllers["📚 Domain Controllers (Questions, Disciplines, etc.)"]
+        
+        SanctumAuth --> AuthController
+        SanctumAuth --> DomainControllers
+        ApiRouter --> HealthController
+    end
+
+    subgraph DomainLayer ["🧠 Camada de Domínio & Segurança"]
+        SpatieRBAC["🛡️ Spatie Permission & Enums (Role / Permission)"]
+        EloquentModels["📦 Eloquent Models (User, Question, etc.)"]
+        ApiResources["📄 API Resources (UserResource)"]
+        
+        AuthController --> SpatieRBAC
+        AuthController --> EloquentModels
+        DomainControllers --> EloquentModels
+        EloquentModels --> ApiResources
+    end
+
+    subgraph Infra ["🐳 Infraestrutura (Docker Sail)"]
         MySQL[("🗄️ MySQL 8.4")]
         Redis[("⚡ Redis (Cache & Sessões)")]
-        Mailpit["✉️ Mailpit (SMTP & Web UI)"]
+        Mailpit["✉️ Mailpit (E-mails Locais)"]
         
-        Domain --> MySQL
-        Domain --> Redis
-        Controllers --> Mailpit
+        EloquentModels --> MySQL
+        HealthController --> MySQL
+        HealthController --> Redis
     end
 ```
 
 ---
 
-## 🗄️ Modelo de Dados & Relacionamentos
+## 🌐 Catálogo de Rotas e Endpoints da API
 
 <details open>
-<summary><b>📊 Clique para expandir/recolher o Diagrama Entidade-Relacionamento (ERD)</b></summary>
+<summary><b>📋 Clique para expandir/recolher a tabela de endpoints disponíveis</b></summary>
 <br/>
 
-```mermaid
-erDiagram
-    DISCIPLINES ||--o{ TOPICS : "possui"
-    DISCIPLINES ||--o{ QUESTIONS : "categoriza"
-    TOPICS ||--o{ QUESTIONS : "especifica"
-    INSTITUTIONS ||--o{ QUESTIONS : "aplica"
-    QUESTIONS ||--o{ OPTIONS : "contém alternativas"
-    QUESTIONS ||--o| OPTIONS : "possui gabarito (correct_option_id)"
-    USERS ||--o{ QUESTION_ATTEMPTS : "realiza"
-    QUESTIONS ||--o{ QUESTION_ATTEMPTS : "recebe tentativas"
-    OPTIONS ||--o{ QUESTION_ATTEMPTS : "é selecionada em"
+| Método | Endpoint | Middleware | Descrição |
+| :---: | :--- | :---: | :--- |
+| `POST` | `/api/auth/register` | `guest` | Cadastra novo usuário, atribui role `student` e retorna Bearer token |
+| `POST` | `/api/auth/login` | `guest` | Autentica usuário com e-mail/senha e emite token Sanctum |
+| `GET` | `/api/auth/user` | `auth:sanctum` | Retorna os dados, roles e permissões do usuário logado |
+| `POST` | `/api/auth/logout` | `auth:sanctum` | Revoga e deleta o token Bearer atual |
+| `GET` | `/api/health` | Público | Retorna o status de integridade do MySQL e Redis |
+| `GET` | `/up` | Público | Endpoint nativo de health check do Laravel |
+| `*` | `/api/questions/*` | `auth:sanctum` | Módulo de questões de concursos *(Modular)* |
+| `*` | `/api/disciplines/*` | `auth:sanctum` | Módulo de disciplinas *(Modular)* |
+| `*` | `/api/topics/*` | `auth:sanctum` | Módulo de tópicos e assuntos *(Modular)* |
+| `*` | `/api/institutions/*` | `auth:sanctum` | Módulo de bancas examinadoras *(Modular)* |
+| `*` | `/api/dashboard/*` | `auth:sanctum` | Módulo de estatísticas do aluno *(Modular)* |
+| `*` | `/api/subscriptions/*` | `auth:sanctum` | Módulo de assinaturas e planos *(Modular)* |
+| `*` | `/api/payments/*` | `auth:sanctum` | Módulo de pagamentos *(Modular)* |
 
-    DISCIPLINES {
-        bigint id PK
-        string name "Nome da Disciplina"
-        string slug UK "Identificador URL"
-        boolean is_active "Status"
-    }
-
-    TOPICS {
-        bigint id PK
-        bigint discipline_id FK "FK Disciplina"
-        string name "Nome do Tópico"
-        string slug "Identificador Único por Disciplina"
-        boolean is_active "Status"
-    }
-
-    INSTITUTIONS {
-        bigint id PK
-        string name "Banca Examinadora"
-        string slug UK "Identificador URL"
-        boolean is_active "Status"
-    }
-
-    QUESTIONS {
-        bigint id PK
-        bigint discipline_id FK
-        bigint topic_id FK
-        bigint institution_id FK
-        smallint year "Ano de Aplicação"
-        longtext statement "Enunciado"
-        longtext explanation "Gabarito Comentado"
-        string difficulty "Enum QuestionDifficulty"
-        bigint correct_option_id FK "Alternativa Correta"
-        boolean is_active "Status"
-    }
-
-    OPTIONS {
-        bigint id PK
-        bigint question_id FK
-        char letter "Letra (A, B, C, D, E)"
-        text text "Texto da Alternativa"
-    }
-
-    QUESTION_ATTEMPTS {
-        bigint id PK
-        bigint user_id FK
-        bigint question_id FK
-        bigint selected_option_id FK
-        boolean is_correct "Acerto/Erro"
-        timestamp answered_at "Data e Hora da Resposta"
-    }
-
-    USERS {
-        bigint id PK
-        string name "Nome Completo"
-        string email UK "E-mail de Acesso"
-        string password "Senha Criptografada"
-    }
-```
 </details>
+
+---
+
+## 🛡️ Controle de Acesso (RBAC)
+
+O sistema conta com um modelo rigoroso de permissões tipadas em Enums nativos do PHP:
+
+```text
+├── App\Enums\Role (Papéis)
+│   ├── SuperAdmin ('super_admin') -> Acesso irrestrito a todo o sistema
+│   ├── Admin ('admin')            -> Gestão operacional, relatórios e usuários
+│   ├── Teacher ('teacher')        -> Gestão de questões, disciplinas e bancas
+│   ├── Student ('student')        -> Resolução de questões, simulados e dashboard
+│   └── Support ('support')        -> Atendimento e visualização de assinaturas
+│
+└── App\Enums\Permission (Permissões Granulares)
+    ├── questions.{view, create, update, delete}
+    ├── disciplines.{view, create, update, delete}
+    ├── topics.{view, create, update, delete}
+    ├── institutions.{view, create, update, delete}
+    ├── users.{view, create, update, delete}
+    ├── subscriptions.{view, manage}
+    ├── payments.{view, manage}
+    └── dashboard.view
+```
 
 ---
 
 ## ⚡ Início Rápido (Quickstart)
 
 > [!IMPORTANT]
-> Certifique-se de ter o **Docker Desktop** ou **Docker Engine** em execução no seu sistema operacional.
+> Certifique-se de possuir o **Docker Desktop** ou **Docker Engine** em execução no seu ambiente.
 
-### 1️⃣ Clonar o Repositório e Configurar Ambiente
+### 1️⃣ Clonar o Repositório e Configurar o `.env`
 ```bash
 git clone https://github.com/jedunatal/aprovei-direto.git
 cd aprovei-direto
@@ -226,17 +214,16 @@ cp .env.example .env
 
 ### 2️⃣ Inicializar os Containers com Laravel Sail
 ```bash
-# Inicia todos os serviços em segundo plano (App, MySQL, Redis, Mailpit)
 ./vendor/bin/sail up -d
 ```
 
-### 3️⃣ Gerar Chave, Rodar Migrações e Popular Dados
+### 3️⃣ Gerar Chave da Aplicação e Rodar Seeds com RBAC
 ```bash
 ./vendor/bin/sail artisan key:generate
 ./vendor/bin/sail artisan migrate:fresh --seed
 ```
 
-### 4️⃣ Compilar e Iniciar o Frontend (Vite)
+### 4️⃣ Iniciar o Servidor Frontend (Vite)
 ```bash
 ./vendor/bin/sail npm install
 ./vendor/bin/sail npm run dev
@@ -244,48 +231,39 @@ cp .env.example .env
 
 ---
 
-## 🌐 Painel de Serviços & Portas
+## 🔑 Credenciais de Desenvolvimento
 
-Acesse os serviços locais através dos links abaixo:
+Após a execução do comando `migrate:fresh --seed`, a conta de Super Administrador estará pronta:
 
-| Serviço | Porta | Link Direto | Finalidade |
-| :--- | :---: | :--- | :--- |
-| 🚀 **Aplicação Web** | `80` (Sail) / `8000` | [http://localhost:8000](http://localhost:8000) | Interface principal do aluno e login |
-| ⚡ **Vite HMR Server** | `5173` | [http://localhost:5173](http://localhost:5173) | Hot Reload para desenvolvimento React |
-| ✉️ **Mailpit (Web UI)** | `8025` | [http://localhost:8025](http://localhost:8025) | Inspeção de e-mails disparados localmente |
-| 🗄️ **MySQL 8.4** | `3306` | `localhost:3306` | Conexão externa com banco de dados |
-| 🔴 **Redis** | `6379` | `localhost:6379` | Cache e mensageria |
-| 🩺 **Health Check** | `/up` | [http://localhost:8000/up](http://localhost:8000/up) | Diagnóstico e disponibilidade do app |
+| Papel | E-mail | Senha | Acesso / Permissões |
+| :--- | :--- | :--- | :--- |
+| 👑 **Super Administrador** | `admin@aproveidireto.com.br` | `Admin@Aprovei2026` | Acesso total a todos os endpoints, permissões e cadastros |
 
 ---
 
-## 🔑 Credenciais de Acesso Pré-configuradas
+## 🌐 Painel de Serviços & Portas
 
-Os seeders criam automaticamente contas de teste prontas para uso:
-
-<details open>
-<summary><b>👤 Clique para visualizar as contas de desenvolvimento</b></summary>
-<br/>
-
-| Perfil | E-mail | Senha | Acesso / Permissões |
-| :--- | :--- | :--- | :--- |
-| 👑 **Super Admin** | `admin@aproveidireto.com.br` | `password` | Acesso completo a todas as áreas, permissões e configurações |
-| 🎓 **Aluno / Concurseiro** | `test@example.com` | `password` | Acesso à resolução de simulados, histórico e estatísticas |
-
-</details>
+| Serviço | Porta | Link / Host | Finalidade |
+| :--- | :---: | :--- | :--- |
+| 🚀 **API / Aplicação Web** | `80` (Sail) / `8000` | [http://localhost:8000](http://localhost:8000) | Servidor da API REST e SPA |
+| ⚡ **Vite Dev Server** | `5173` | [http://localhost:5173](http://localhost:5173) | Hot Module Replacement (HMR) React |
+| ✉️ **Mailpit (Web UI)** | `8025` | [http://localhost:8025](http://localhost:8025) | Painel web para inspeção de e-mails |
+| 🗄️ **MySQL 8.4** | `3306` | `localhost:3306` | Banco de dados relacional |
+| 🔴 **Redis** | `6379` | `localhost:6379` | Cache e sessões |
+| 🩺 **Health Check** | `/api/health` | [http://localhost:8000/api/health](http://localhost:8000/api/health) | Diagnóstico da infraestrutura (MySQL + Redis) |
 
 ---
 
 ## 🧪 Testes Automatizados & Qualidade
 
-A integridade do código e as regras de negócio de domínio são validadas através de testes automatizados com **PHPUnit**:
+A integridade dos endpoints da API e da hierarquia de permissões é validada por testes automatizados com **PHPUnit**:
 
 ```bash
-# 🧪 Executar toda a suíte de testes
-./vendor/bin/sail artisan test
+# 🧪 Executar os testes de API (Auth & Hierarquia RBAC)
+./vendor/bin/sail artisan test tests/Feature/Api
 
-# 🎯 Executar apenas os testes de domínio de questões
-./vendor/bin/sail artisan test --filter QuestionDomainTest
+# 🎯 Executar toda a suíte de testes do projeto
+./vendor/bin/sail artisan test
 
 # 🎨 Formatar e validar padrão de código PSR-12 (Laravel Pint)
 ./vendor/bin/sail pint
@@ -295,9 +273,9 @@ A integridade do código e as regras de negócio de domínio são validadas atra
 ```
 
 <div align="center">
-  <img src="https://img.shields.io/badge/PHPUnit-32_passed_(91_assertions)-brightgreen?style=flat-square&logo=php" alt="Testes Passando" />
+  <img src="https://img.shields.io/badge/PHPUnit-API_Tests_Passed-brightgreen?style=flat-square&logo=php" alt="Testes Passando" />
   <img src="https://img.shields.io/badge/Code_Style-PSR--12_(Pint)-blue?style=flat-square" alt="PSR-12" />
-  <img src="https://img.shields.io/badge/Coverage-Core_Domain-success?style=flat-square" alt="Domain Coverage" />
+  <img src="https://img.shields.io/badge/Auth-Sanctum_Tokens-E040FB?style=flat-square" alt="Sanctum Auth" />
 </div>
 
 ---
@@ -305,54 +283,49 @@ A integridade do código e as regras de negócio de domínio são validadas atra
 ## 📂 Mapa Estrutural do Repositório
 
 <details>
-<summary><b>📁 Clique para visualizar a árvore completa de diretórios</b></summary>
+<summary><b>📁 Clique para expandir a estrutura de diretórios</b></summary>
 <br/>
 
 ```text
 aprovei-direto/
 ├── app/
-│   ├── Enums/                       # Enums tipados do PHP (QuestionDifficulty)
+│   ├── Enums/                       # Enums nativos do PHP (Role, Permission)
 │   ├── Http/
-│   │   ├── Api/                     # Controllers dedicados a endpoints de API (HealthCheck)
 │   │   ├── Controllers/
-│   │   │   ├── Auth/                # Fluxos de autenticação (Breeze)
-│   │   │   ├── ProfileController.php# Gerenciamento de perfil
-│   │   │   └── Controller.php
-│   │   ├── Middleware/              # Middlewares HTTP (HandleInertiaRequests)
-│   │   └── Requests/                # Validações tipadas (Form Requests)
-│   ├── Models/                      # Models Eloquent (Discipline, Topic, Institution, Question, Option, QuestionAttempt, User)
-│   └── Providers/                   # Service Providers da aplicação
-├── bootstrap/                       # Inicialização do framework (app.php, providers.php)
-├── config/                          # Configurações globais (auth, database, permission, sanctum, etc.)
+│   │   │   └── Api/
+│   │   │       ├── Auth/            # Controllers de autenticação (Login, Register, Logout, CurrentUser)
+│   │   │       └── HealthCheckController.php
+│   │   ├── Requests/
+│   │   │   └── Auth/                # Form Requests de validação da API (ApiLoginRequest, ApiRegisterRequest)
+│   │   ├── Resources/               # API Resources para formatação de respostas JSON (UserResource)
+│   │   └── Middleware/              # Middlewares HTTP da aplicação
+│   ├── Models/                      # Models Eloquent (User, etc.)
+│   └── Providers/                   # Service Providers
+├── bootstrap/                       # Configuração da aplicação, middlewares e exception handlers (app.php)
+├── config/                          # Configurações globais (sanctum, permission, database, etc.)
 ├── database/
-│   ├── factories/                   # Factories com geradores de dados para todas as models
-│   ├── migrations/                  # Migrações com chaves estrangeiras e índices compostos
-│   └── seeders/                     # Seeders para RBAC, disciplinas, tópicos, bancas e questões
+│   ├── migrations/                  # Migrações do banco de dados (users, tokens, permissões, etc.)
+│   └── seeders/                     # Seeders para RBAC (RolePermissionSeeder)
 ├── resources/
-│   ├── css/                         # Estilos Tailwind CSS
 │   ├── js/
-│   │   ├── Components/              # Componentes de interface React reutilizáveis
-│   │   ├── Layouts/                 # Layouts (Authenticated, Guest)
-│   │   ├── Pages/                   # Páginas da SPA (Auth, Dashboard, Profile, Welcome)
-│   │   ├── types/                   # Tipagens TypeScript (props, ziggy, models)
-│   │   └── app.tsx                  # Ponto de entrada do React/Inertia
+│   │   ├── api/                     # Cliente HTTP (axios.ts)
+│   │   ├── Components/              # Componentes de interface React
+│   │   ├── Layouts/                 # Layouts de página
+│   │   ├── Pages/                   # Páginas da SPA React
+│   │   └── app.tsx                  # Ponto de entrada do frontend
 │   └── views/
 │       └── app.blade.php            # Template HTML raiz
 ├── routes/
-│   ├── api.php                      # Rotas de API protegidas com Sanctum
-│   ├── auth.php                     # Rotas de autenticação
-│   ├── console.php                  # Comandos Artisan customizados
-│   └── web.php                      # Rotas principais da aplicação
+│   ├── api/                         # Rotas modulares por domínio (auth, health, questions, etc.)
+│   ├── api.php                      # Ponto de entrada das rotas de API
+│   ├── console.php                  # Comandos Artisan
+│   └── web.php                      # Rotas da interface web
 ├── tests/
-│   ├── Feature/
-│   │   ├── Auth/                    # Testes de autenticação e sessão
-│   │   ├── Domain/                  # Testes do motor de questões e integridade (QuestionDomainTest)
-│   │   └── ProfileTest.php          # Testes de perfil
-│   └── Unit/                        # Testes unitários
+│   └── Feature/
+│       └── Api/                     # Testes automatizados da API (AuthTest, HierarchyTest)
 ├── compose.yaml                     # Orquestração Docker (App, MySQL 8.4, Redis, Mailpit)
 ├── composer.json                    # Dependências do backend PHP
 ├── package.json                     # Dependências do frontend Node/React
-├── phpunit.xml                      # Configurações de testes
 └── vite.config.js                   # Configurações do Vite
 ```
 </details>
@@ -361,18 +334,20 @@ aprovei-direto/
 
 ## 🗺️ Roadmap de Desenvolvimento
 
-- [x] **Fase 1: Fundação & Autenticação** *(Scaffolding, Breeze, Sanctum, Docker Sail, RBAC Spatie)*
-- [x] **Fase 2: Modelagem de Domínio & Questões** *(Disciplinas, Tópicos, Bancas, Questões, Alternativas, Tentativas, Seeders, Testes)*
-- [ ] **Fase 3: Interface do Aluno & Feed de Questões** *(Filtros combinados, tela de resolução interativa com feedback imediato)*
-- [ ] **Fase 4: Painel Administrativo Filament** *(Gestão visual de questões, importador em lote e moderação)*
-- [ ] **Fase 5: Métricas & Estatísticas Avançadas** *(Gráficos de evolução, taxa de acertos por disciplina e comparativos)*
-- [ ] **Fase 6: Simulados & Cadernos Personalizados** *(Geração de simulados cronometrados e exportação em PDF)*
+- [x] **Fase 1: Infraestrutura & Docker Sail** *(MySQL 8.4, Redis, Mailpit, Laravel 13)*
+- [x] **Fase 2: Autenticação RESTful com Sanctum** *(Register, Login, Logout, CurrentUser, Tokens Bearer)*
+- [x] **Fase 3: Controle de Acesso (RBAC) com Enums** *(Papéis, Permissões granulares, Spatie, Seeders)*
+- [x] **Fase 4: Tratamento de Exceções & Respostas JSON** *(Handler global para 401, 422, 404)*
+- [ ] **Fase 5: Módulos de Domínio da API** *(Endpoints CRUD de Questões, Disciplinas, Tópicos e Bancas)*
+- [ ] **Fase 6: Integração Frontend React com Axios** *(Interceptors de autenticação, telas de Login/Cadastro/Dashboard)*
+- [ ] **Fase 7: Motor de Resolução & Caderno de Erros** *(Submissão de respostas, cálculo de pontuação e histórico)*
+- [ ] **Fase 8: Painel Administrativo** *(Gestão de conteúdo e moderação de questões)*
 
 ---
 
 <div align="center">
 
-Desenvolvido com dedicação para concurseiros de todo o Brasil 🇧🇷<br/>
+Desenvolvido com excelência para concurseiros de todo o Brasil 🇧🇷<br/>
 <sub>Distribuído sob a licença <a href="LICENSE">MIT</a>.</sub>
 
 </div>
