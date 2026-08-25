@@ -39,7 +39,7 @@ class QuestionSeeder extends Seeder
                     ['name' => $topicName, 'is_active' => true]
                 );
 
-                $topicMap[$disciplineName . ':' . $topicName] = $topic;
+                $topicMap[$disciplineName.':'.$topicName] = $topic;
             }
         }
 

@@ -12,7 +12,7 @@ interface PaymentGatewayInterface
     public function createPixPayment(User $user, int $amount, string $referenceId): PixPaymentData;
 
     /**
-     * @param array<string, mixed> $payload
+     * @param  array<string, mixed>  $payload
      */
     public function verifyWebhookSignature(array $payload, string $signature): bool;
 }

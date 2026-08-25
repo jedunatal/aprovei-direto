@@ -14,7 +14,7 @@ use Illuminate\Validation\ValidationException;
 class AnswerQuestionAction
 {
     /**
-     * @param array<string, mixed> $data
+     * @param  array<string, mixed>  $data
      * @return array<string, mixed>
      */
     public function execute(User $user, Question $question, array $data): array

@@ -20,13 +20,13 @@ class HealthCheckController extends Controller
         try {
             DB::connection()->getPdo();
         } catch (Throwable $e) {
-            $databaseStatus = 'error: ' . $e->getMessage();
+            $databaseStatus = 'error: '.$e->getMessage();
         }
 
         try {
             Redis::connection()->ping();
         } catch (Throwable $e) {
-            $redisStatus = 'error: ' . $e->getMessage();
+            $redisStatus = 'error: '.$e->getMessage();
         }
 
         $isHealthy = $databaseStatus === 'ok' && $redisStatus === 'ok';

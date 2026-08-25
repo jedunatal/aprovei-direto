@@ -1,24 +1,68 @@
 import '../css/app.css';
-
-import { createInertiaApp } from '@inertiajs/react';
-import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers';
+import React from 'react';
 import { createRoot } from 'react-dom/client';
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { AuthProvider, useAuth } from './context/AuthContext';
+import { DashboardPage } from './pages/Dashboard/DashboardPage';
+import { QuestionsPage } from './pages/Questions/QuestionsPage';
+import { ErrorNotebookPage } from './pages/Questions/ErrorNotebookPage';
+import { Login } from './pages/Auth/Login';
+import { Register } from './pages/Auth/Register';
 
-const appName = import.meta.env.VITE_APP_NAME || 'Laravel';
-
-createInertiaApp({
-    title: (title) => `${title} - ${appName}`,
-    resolve: (name) =>
-        resolvePageComponent(
-            `./Pages/${name}.tsx`,
-            import.meta.glob('./Pages/**/*.tsx'),
-        ),
-    setup({ el, App, props }) {
-        const root = createRoot(el);
-
-        root.render(<App {...props} />);
-    },
-    progress: {
-        color: '#4B5563',
+const queryClient = new QueryClient({
+    defaultOptions: {
+        queries: {
+            staleTime: 1000 * 60 * 5, // 5 minutos de cache
+            retry: 1,
+        },
     },
 });
+
+const ProtectedRoute: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+    const { isAuthenticated, isLoading } = useAuth();
+
+    if (isLoading) {
+        return (
+            <div className="min-h-screen flex items-center justify-center text-slate-500 font-medium bg-slate-50">
+                Carregando plataforma...
+            </div>
+        );
+    }
+
+    if (!isAuthenticated) {
+        return <Navigate to="/login" replace />;
+    }
+
+    return <>{children}</>;
+};
+
+export const App: React.FC = () => {
+    return (
+        <QueryClientProvider client={queryClient}>
+            <AuthProvider>
+                <BrowserRouter>
+                    <Routes>
+                        <Route path="/login" element={<Login />} />
+                        <Route path="/register" element={<Register />} />
+                        
+                        <Route path="/" element={<ProtectedRoute><DashboardPage /></ProtectedRoute>} />
+                        <Route path="/questions" element={<ProtectedRoute><QuestionsPage /></ProtectedRoute>} />
+                        <Route path="/errors" element={<ProtectedRoute><ErrorNotebookPage /></ProtectedRoute>} />
+
+                        <Route path="*" element={<Navigate to="/" replace />} />
+                    </Routes>
+                </BrowserRouter>
+            </AuthProvider>
+        </QueryClientProvider>
+    );
+};
+
+const rootElement = document.getElementById('app');
+if (rootElement) {
+    createRoot(rootElement).render(
+        <React.StrictMode>
+            <App />
+        </React.StrictMode>
+    );
+}

@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Tests\Feature\Api;
 
 use App\Enums\SubscriptionStatus;
-use App\Models\Payment;
 use App\Models\Subscription;
 use App\Models\User;
 use Database\Seeders\RolePermissionSeeder;

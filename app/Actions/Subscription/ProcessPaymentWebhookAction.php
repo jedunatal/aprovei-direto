@@ -12,7 +12,7 @@ use Illuminate\Validation\ValidationException;
 class ProcessPaymentWebhookAction
 {
     /**
-     * @param array<string, mixed> $payload
+     * @param  array<string, mixed>  $payload
      * @return array<string, mixed>
      */
     public function execute(array $payload): array
