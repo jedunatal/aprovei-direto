@@ -10,6 +10,9 @@ enum Permission: string
     case QuestionsCreate = 'questions.create';
     case QuestionsUpdate = 'questions.update';
     case QuestionsDelete = 'questions.delete';
+    case QuestionsImport = 'questions.import';
+    case QuestionsReview = 'questions.review';
+    case QuestionsPublish = 'questions.publish';
 
     case DisciplinesView = 'disciplines.view';
     case DisciplinesCreate = 'disciplines.create';

@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Route;
 Route::group([], __DIR__.'/api/health.php');
 
 Route::prefix('auth')->name('auth.')->group(__DIR__.'/api/auth.php');
+Route::prefix('admin')->name('admin.')->group(__DIR__.'/api/admin.php');
 Route::prefix('questions')->name('questions.')->group(__DIR__.'/api/questions.php');
 Route::prefix('disciplines')->name('disciplines.')->group(__DIR__.'/api/disciplines.php');
 Route::prefix('topics')->name('topics.')->group(__DIR__.'/api/topics.php');

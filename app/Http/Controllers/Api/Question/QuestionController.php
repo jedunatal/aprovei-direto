@@ -22,7 +22,7 @@ class QuestionController extends Controller
     {
         $user = $request->user();
         $query = Question::query()
-            ->where('is_active', true)
+            ->published()
             ->with(['discipline', 'topic', 'institution', 'options'])
             ->with(['latestUserAttempt' => fn ($q) => $q->where('user_id', $user->id)]);
 
@@ -46,6 +46,8 @@ class QuestionController extends Controller
 
     public function show(Question $question): QuestionResource
     {
+        $this->authorize('view', $question);
+
         $userId = auth()->id();
 
         $question->load([
@@ -92,7 +94,7 @@ class QuestionController extends Controller
 
         $query = Question::query()
             ->whereIn('id', $incorrectQuestionIds)
-            ->where('is_active', true)
+            ->published()
             ->with(['discipline', 'topic', 'institution', 'options'])
             ->with(['latestUserAttempt' => fn ($q) => $q->where('user_id', $user->id)]);
 

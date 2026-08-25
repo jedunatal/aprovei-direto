@@ -10,6 +10,11 @@ import { QuestionsPage } from './pages/Questions/QuestionsPage';
 import { ErrorNotebookPage } from './pages/Questions/ErrorNotebookPage';
 import { Login } from './pages/Auth/Login';
 import { Register } from './pages/Auth/Register';
+import { AdminQuestionsListPage } from './pages/Admin/Questions/AdminQuestionsListPage';
+import { ImportQuestionsPage } from './pages/Admin/Questions/ImportQuestionsPage';
+import { ImportBatchesPage } from './pages/Admin/Questions/ImportBatchesPage';
+import { QuestionFormPage } from './pages/Admin/Questions/QuestionFormPage';
+import { QuestionReviewPage } from './pages/Admin/Questions/QuestionReviewPage';
 
 const queryClient = new QueryClient({
     defaultOptions: {
@@ -20,8 +25,8 @@ const queryClient = new QueryClient({
     },
 });
 
-const ProtectedRoute: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-    const { isAuthenticated, isLoading } = useAuth();
+const ProtectedRoute: React.FC<{ children: React.ReactNode; staffOnly?: boolean }> = ({ children, staffOnly = false }) => {
+    const { user, isAuthenticated, isLoading } = useAuth();
 
     if (isLoading) {
         return (
@@ -33,6 +38,14 @@ const ProtectedRoute: React.FC<{ children: React.ReactNode }> = ({ children }) =
 
     if (!isAuthenticated) {
         return <Navigate to="/login" replace />;
+    }
+
+    if (staffOnly) {
+        const isStaff = user?.roles?.some((r) => ['super_admin', 'admin', 'teacher'].includes(r)) ||
+                        user?.permissions?.some((p) => ['questions.create', 'questions.import', 'questions.update'].includes(p));
+        if (!isStaff) {
+            return <Navigate to="/" replace />;
+        }
     }
 
     return <>{children}</>;
@@ -48,9 +61,18 @@ export const App: React.FC = () => {
                             <Route path="/login" element={<Login />} />
                             <Route path="/register" element={<Register />} />
                             
+                            {/* Rotas de Alunos */}
                             <Route path="/" element={<ProtectedRoute><DashboardPage /></ProtectedRoute>} />
                             <Route path="/questions" element={<ProtectedRoute><QuestionsPage /></ProtectedRoute>} />
                             <Route path="/errors" element={<ProtectedRoute><ErrorNotebookPage /></ProtectedRoute>} />
+
+                            {/* Rotas de Backoffice / Admin */}
+                            <Route path="/admin/questions" element={<ProtectedRoute staffOnly><AdminQuestionsListPage /></ProtectedRoute>} />
+                            <Route path="/admin/questions/import" element={<ProtectedRoute staffOnly><ImportQuestionsPage /></ProtectedRoute>} />
+                            <Route path="/admin/questions/imports" element={<ProtectedRoute staffOnly><ImportBatchesPage /></ProtectedRoute>} />
+                            <Route path="/admin/questions/create" element={<ProtectedRoute staffOnly><QuestionFormPage /></ProtectedRoute>} />
+                            <Route path="/admin/questions/:id/edit" element={<ProtectedRoute staffOnly><QuestionFormPage /></ProtectedRoute>} />
+                            <Route path="/admin/questions/:id/review" element={<ProtectedRoute staffOnly><QuestionReviewPage /></ProtectedRoute>} />
 
                             <Route path="*" element={<Navigate to="/" replace />} />
                         </Routes>

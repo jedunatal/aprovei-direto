@@ -38,6 +38,65 @@ export interface Question {
     } | null;
 }
 
+export type QuestionStatus = 'draft' | 'review' | 'approved' | 'published' | 'rejected' | 'archived';
+
+export interface AdminQuestion {
+    id: number;
+    external_id: string | null;
+    year: number;
+    difficulty: 'easy' | 'medium' | 'hard';
+    status: QuestionStatus;
+    status_label: string;
+    statement: string;
+    explanation: string;
+    correct_option_id: number | null;
+    correct_option_letter?: string;
+    metadata: Record<string, unknown> | null;
+    is_active: boolean;
+    discipline: { id: number; name: string; slug: string };
+    topic: { id: number; name: string; slug: string };
+    institution: { id: number; name: string; slug: string };
+    options: Option[];
+    created_by: { id: number; name: string; email: string } | null;
+    reviewed_by: { id: number; name: string; email: string } | null;
+    published_at: string | null;
+    created_at: string;
+    updated_at: string;
+}
+
+export type ImportBatchStatus = 'pending' | 'processing' | 'completed' | 'failed' | 'cancelled';
+export type ImportMode = 'skip' | 'update' | 'upsert';
+
+export interface QuestionImportBatch {
+    id: number;
+    file_name: string;
+    file_size: number;
+    import_mode: ImportMode;
+    import_mode_label: string;
+    status: ImportBatchStatus;
+    status_label: string;
+    total_records: number;
+    processed_records: number;
+    successful_records: number;
+    failed_records: number;
+    progress_percent: number;
+    error_summary: string | null;
+    user: { id: number; name: string; email: string };
+    started_at: string | null;
+    completed_at: string | null;
+    created_at: string;
+}
+
+export interface QuestionImportError {
+    id: number;
+    import_batch_id: number;
+    line_number: number;
+    external_id: string | null;
+    payload: Record<string, unknown> | null;
+    error_message: string;
+    created_at: string;
+}
+
 export interface AnswerResponse {
     is_correct: boolean;
     selected_option_id: number;

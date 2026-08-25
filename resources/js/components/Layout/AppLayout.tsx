@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
-import { LayoutDashboard, HelpCircle, BookX, CreditCard, LogOut, ShieldCheck } from 'lucide-react';
+import { LayoutDashboard, HelpCircle, BookX, CreditCard, LogOut, ShieldCheck, Database } from 'lucide-react';
 import { PixCheckoutModal } from '../Subscription/PixCheckoutModal';
 import { ThemeToggle } from '../common/ThemeToggle';
 
@@ -10,11 +10,20 @@ export const AppLayout: React.FC<{ children: React.ReactNode }> = ({ children })
     const location = useLocation();
     const [isCheckoutOpen, setIsCheckoutOpen] = useState(false);
 
+    const isStaff = user?.roles?.some((r) => ['super_admin', 'admin', 'teacher'].includes(r)) ||
+                    user?.permissions?.some((p) => ['questions.create', 'questions.import', 'questions.update'].includes(p));
+
     const navItems = [
         { path: '/', label: 'Dashboard', icon: LayoutDashboard },
         { path: '/questions', label: 'Banco de Questões', icon: HelpCircle },
         { path: '/errors', label: 'Caderno de Erros', icon: BookX },
     ];
+
+    if (isStaff) {
+        navItems.push(
+            { path: '/admin/questions', label: 'Gestão de Conteúdo', icon: Database }
+        );
+    }
 
     return (
         <div className="min-h-screen bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100 flex flex-col transition-colors duration-200">
@@ -31,14 +40,14 @@ export const AppLayout: React.FC<{ children: React.ReactNode }> = ({ children })
                         <nav className="hidden md:flex items-center gap-1">
                             {navItems.map((item) => {
                                 const Icon = item.icon;
-                                const isActive = location.pathname === item.path;
+                                const isActive = location.pathname === item.path || location.pathname.startsWith(item.path + '/');
                                 return (
                                     <Link 
                                         key={item.path}
                                         to={item.path}
                                         className={`flex items-center gap-2 px-3.5 py-2 rounded-lg text-sm font-medium transition-colors ${
                                             isActive
-                                                ? 'bg-blue-50 text-blue-700 dark:bg-blue-950/60 dark:text-blue-400'
+                                                ? 'bg-blue-50 text-blue-700 dark:bg-blue-950/60 dark:text-blue-400 font-semibold'
                                                 : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100 dark:text-slate-400 dark:hover:text-slate-100 dark:hover:bg-slate-800/80'
                                         }`}
                                     >
@@ -58,7 +67,7 @@ export const AppLayout: React.FC<{ children: React.ReactNode }> = ({ children })
                         ) : (
                             <button
                                 onClick={() => setIsCheckoutOpen(true)}
-                                className="flex items-center gap-1.5 px-3 py-1.5 bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-white rounded-lg text-xs font-bold shadow-sm transition-all"
+                                className="flex items-center gap-1.5 px-3.5 py-1.5 bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-white rounded-lg text-xs font-bold shadow-sm transition-all"
                             >
                                 <CreditCard className="w-3.5 h-3.5" /> Assinar Premium
                             </button>

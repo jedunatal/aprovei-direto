@@ -33,13 +33,16 @@ class RolePermissionSeeder extends Seeder
         $superAdminRole = Role::firstOrCreate(['name' => AppRole::SuperAdmin->value]);
         $superAdminRole->syncPermissions(Permission::all());
 
-        // Admin: Gestão de conteúdo, usuários e relatórios
+        // Admin: Gestão operacional, curadoria, importação, usuários e relatórios
         $adminRole = Role::firstOrCreate(['name' => AppRole::Admin->value]);
         $adminRole->syncPermissions([
             AppPermission::QuestionsView->value,
             AppPermission::QuestionsCreate->value,
             AppPermission::QuestionsUpdate->value,
             AppPermission::QuestionsDelete->value,
+            AppPermission::QuestionsImport->value,
+            AppPermission::QuestionsReview->value,
+            AppPermission::QuestionsPublish->value,
             AppPermission::DisciplinesView->value,
             AppPermission::DisciplinesCreate->value,
             AppPermission::DisciplinesUpdate->value,
@@ -62,12 +65,14 @@ class RolePermissionSeeder extends Seeder
             AppPermission::DashboardView->value,
         ]);
 
-        // Teacher: Gestão de questões, tópicos e disciplinas
+        // Teacher: Criação, edição, revisão e importação de questões
         $teacherRole = Role::firstOrCreate(['name' => AppRole::Teacher->value]);
         $teacherRole->syncPermissions([
             AppPermission::QuestionsView->value,
             AppPermission::QuestionsCreate->value,
             AppPermission::QuestionsUpdate->value,
+            AppPermission::QuestionsImport->value,
+            AppPermission::QuestionsReview->value,
             AppPermission::DisciplinesView->value,
             AppPermission::TopicsView->value,
             AppPermission::InstitutionsView->value,
